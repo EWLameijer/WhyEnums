@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-record StringPet(String name, String species) {}
+record StringPet(String name, String species) {
+}
 
 // The idea of a 'limited type' like an enum is that you cannot accidentally assign a wrong value to a variable of that
 // type
@@ -16,7 +17,8 @@ record StringPet(String name, String species) {}
 //    your program anymore. So if I would add a SNAKE, I do not need to update any other place in my code!
 enum Species {CAT, DOG, HAMSTER, RABBIT}
 
-record EnumPet(String name, Species species) {}
+record EnumPet(String name, Species species) {
+}
 
 public class Main {
     public static void main(String[] args) {
@@ -26,7 +28,7 @@ public class Main {
                 new StringPet("Pluto", "dog"),
                 new StringPet("Nero", "cat"),
                 new StringPet("Bugs", "wabbit")); // typo (or is it?)
-                // if I would add a snake, I would have to remember adding it to two other places as well.
+        // if I would add a snake, I would have to remember adding it to two other places as well.
 
         System.out.println("STRINGPETS SORTED BY SPECIES");
         for (String species : List.of("cat", "rabbit")) { // I forgot a species
@@ -41,10 +43,12 @@ public class Main {
         String chosenStringSpecies = in.next();
         if (Stream.of("dog", "hamster", "goldfish", "rabbit").noneMatch(chosenStringSpecies::equalsIgnoreCase))
             System.out.println("We don't have any records on species '" + chosenStringSpecies + "'."); // argh! I don't have any goldfish, and I forgot the cats!
-
-        System.out.println("STRINGPETS OF THE CHOSEN SPECIES");
-        for (StringPet pet : stringPets) {
-            if (pet.species().equalsIgnoreCase(chosenStringSpecies)) System.out.println(pet); // this does not work for rabbits
+        else {
+            System.out.println("STRINGPETS OF THE CHOSEN SPECIES");
+            for (StringPet pet : stringPets) {
+                if (pet.species().equalsIgnoreCase(chosenStringSpecies))
+                    System.out.println(pet); // this does not work for rabbits
+            }
         }
 
         var enumPets = List.of(
@@ -68,8 +72,10 @@ public class Main {
         System.out.println("PETS OF THE CHOSEN SPECIES");
         if (Arrays.stream(Species.values()).noneMatch(species -> chosenEnumSpecies.equalsIgnoreCase(species.name())))
             System.out.println("We don't have any records on species '" + chosenEnumSpecies + "'.");
-        for (EnumPet pet : enumPets) {
-            if (pet.species().name().equalsIgnoreCase(chosenEnumSpecies)) System.out.println(pet);
+        else {
+            for (EnumPet pet : enumPets) {
+                if (pet.species().name().equalsIgnoreCase(chosenEnumSpecies)) System.out.println(pet);
+            }
         }
 
         System.out.println("\nEnd");
